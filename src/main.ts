@@ -2,6 +2,10 @@
 import "./setup.js";
 
 import { Client, Events, IntentsBitField } from "discord.js";
+import { ApplicationGuildCommands } from "./application-guild-commands.js";
+import ApplicationCommandsUtils from "./utils/application-commands.js";
+
+const { DISCORD_APP_TOKEN, DISCORD_ORG_GUILD_ID } = process.env;
 
 async function App() {
   try {
@@ -13,6 +17,21 @@ async function App() {
         IntentsBitField.Flags.MessageContent,
       ],
     });
+    await client.login(DISCORD_APP_TOKEN);
+
+    // register guild commands
+    console.log(
+      `Guild(${DISCORD_ORG_GUILD_ID}): Slash(/) commands registration starting...`,
+    );
+    ApplicationCommandsUtils.registerApplicationGuildCommands(
+      client.user.id,
+      DISCORD_ORG_GUILD_ID,
+      ApplicationGuildCommands,
+    ).then(() => {
+      console.log(
+        `Guild(${DISCORD_ORG_GUILD_ID}): Slash(/) commands has registered!`,
+      );
+    });
 
     client.on(Events.MessageCreate, (message) => {
       console.log("MESSAGE SENT:", message.content);
@@ -22,8 +41,22 @@ async function App() {
       console.log("Client is live!");
     });
 
-    // sign in to the client
-    await client.login(process.env.DISCORD_APP_TOKEN);
+    client.on(Events.InteractionCreate, async (int) => {
+      if (int.isChatInputCommand()) {
+        /**
+         * TODO: make a handler
+         * EG: command.handler && command.handler.run(int, ...)
+         */
+        // const command = ApplicationGuildCommands.filter(c => c.type === 1).find((c) => c.name === int.commandName)
+
+        if (int.commandName === "ping") {
+          await int.reply({
+            content: "Pong!",
+            ephemeral: true,
+          });
+        }
+      }
+    });
   } catch (error) {
     throw new Error(error);
   }
