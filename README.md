@@ -2,9 +2,9 @@
 
 ### Development 
 
-This project is special to Penshaft Community. We don't help about this project. 
+This project is exclusive to the Penshaft Community. We won't help you in this project.
 
 ## Support 
 
-This project is special to Penshaft Community. We don't help about this project. 
+This project is exclusive to the Penshaft Community. We won't help you in this project.
 
