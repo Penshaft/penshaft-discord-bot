@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Penshaft/penshaft-discord-bot/compare/v1.0.0...v1.1.0) (2022-07-28)
+
+
+### Features
+
+* **heroku:** add Procfile ([7eef7e4](https://github.com/Penshaft/penshaft-discord-bot/commit/7eef7e4db98c92017193e4601dc00c6ecaacfb1c))
+
 ## 1.0.0 (2022-07-28)
 
 
