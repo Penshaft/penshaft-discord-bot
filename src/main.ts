@@ -54,6 +54,16 @@ async function App() {
             content: "Pong!",
             ephemeral: true,
           });
+        } else if (int.commandName === "help") {
+          await int.reply({
+            content: "Help command will work in future!",
+            ephemeral: true,
+          });
+        } else if (int.commandName === "invite") {
+          await int.reply({
+            content: "You can't add me to your guild. I'm special for here :)",
+            ephemeral: true,
+          });
         }
       }
     });

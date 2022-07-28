@@ -6,4 +6,14 @@ export const ApplicationGuildCommands: RESTPutAPIApplicationCommandsJSONBody = [
     type: 1,
     description: "Ping pong!",
   },
+  {
+    name: "help",
+    type: 1,
+    description: "Ping pong!",
+  },
+  {
+    name: "invite",
+    type: 1,
+    description: "Ping pong!",
+  },
 ];
