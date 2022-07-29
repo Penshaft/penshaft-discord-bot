@@ -8,3 +8,7 @@ This project is exclusive to the Penshaft Community. We won't help you in this p
 
 This project is exclusive to the Penshaft Community. We won't help you in this project.
 
+## Database
+
+- [With Typeorm](https://github.com/Penshaft/penshaft-discord-bot/tree/typeorm-integration)
+
