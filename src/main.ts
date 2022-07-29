@@ -3,12 +3,16 @@ import "./setup.js";
 
 import { Client, Events, IntentsBitField } from "discord.js";
 import { ApplicationGuildCommands } from "./application-guild-commands.js";
+import Database, { AppDataSource } from "./database/index.js";
 import ApplicationCommandsUtils from "./utils/application-commands.js";
 
 const { DISCORD_APP_TOKEN, DISCORD_ORG_GUILD_ID } = process.env;
 
 async function App() {
   try {
+    await AppDataSource.initialize();
+    console.log("Database: AppDataSource initialized.");
+
     const client = new Client<true>({
       intents: [
         IntentsBitField.Flags.MessageContent,
@@ -20,17 +24,14 @@ async function App() {
     await client.login(DISCORD_APP_TOKEN);
 
     // register guild commands
-    console.log(
-      `Guild(${DISCORD_ORG_GUILD_ID}): Slash(/) commands registration starting...`,
-    );
+    console.log(`Guild(${DISCORD_ORG_GUILD_ID}): Slash(/) commands registration starting...`);
+    console.time(`Guild(${DISCORD_ORG_GUILD_ID})[SlashCommandsRegistration]`);
     ApplicationCommandsUtils.registerApplicationGuildCommands(
       client.user.id,
       DISCORD_ORG_GUILD_ID,
       ApplicationGuildCommands,
     ).then(() => {
-      console.log(
-        `Guild(${DISCORD_ORG_GUILD_ID}): Slash(/) commands has registered!`,
-      );
+      console.timeEnd(`Guild(${DISCORD_ORG_GUILD_ID})[SlashCommandsRegistration]`);
     });
 
     client.on(Events.MessageCreate, (message) => {
@@ -42,6 +43,21 @@ async function App() {
     });
 
     client.on(Events.InteractionCreate, async (int) => {
+      const interactionAuthor = int.user;
+
+      const user = await Database.findUserByIdFromAppDataSource(interactionAuthor.id);
+
+      if (!user) {
+        const newUser = Database.createUserForAppDataSource({
+          ...interactionAuthor,
+        });
+
+        console.log(`Database(User ${interactionAuthor.id}): Saving the user...`);
+        console.time(`Database(User ${interactionAuthor.id})[UserSave]`);
+        await Database.saveUserToAppDataSource(newUser);
+        console.timeEnd(`Database(User ${interactionAuthor.id})[UserSave]`);
+      }
+
       if (int.isChatInputCommand()) {
         /**
          * TODO: make a handler

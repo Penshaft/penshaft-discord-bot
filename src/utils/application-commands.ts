@@ -1,9 +1,5 @@
 import { REST } from "@discordjs/rest";
-import {
-  RESTPutAPIApplicationGuildCommandsJSONBody,
-  Routes,
-  Snowflake
-} from "discord.js";
+import { RESTPutAPIApplicationGuildCommandsJSONBody, Routes, Snowflake } from "discord.js";
 
 const { DISCORD_APP_TOKEN } = process.env;
 

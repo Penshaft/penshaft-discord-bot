@@ -1,10 +1,9 @@
 ## Penshaft Community's Bot
 
-### Development 
+### Development
 
 This project is exclusive to the Penshaft Community. We won't help you in this project.
 
-## Support 
+## Support
 
 This project is exclusive to the Penshaft Community. We won't help you in this project.
-
